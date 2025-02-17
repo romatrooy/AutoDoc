@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.database import get_db
 from app.core.config import settings
+from app.api.v1.api import api_router
 
 app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
@@ -14,6 +15,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root(db: Session = Depends(get_db)):
