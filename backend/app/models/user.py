@@ -1,4 +1,5 @@
 from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
 class User(Base):
@@ -8,3 +9,5 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean(), default=True)
+
+    templates = relationship("Template", back_populates="user")
